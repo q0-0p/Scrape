@@ -69,8 +69,8 @@ for (var x = 0; x < provinces.length; x++) {
             
             fs.writeFileSync(provinces[x] + '/' + provinces[x] + 'Links.txt', tempLink + '\n', { flag: 'a' });
             
-            if (fs.readFileSync('.gitignore').toString().indexOf(provinces[x]) < 0)
-                fs.writeFileSync('.gitignore', provinces[x] + '/' + '\n', { flag: 'a' });
+            // if (fs.readFileSync('.gitignore').toString().indexOf(provinces[x]) < 0)
+            //     fs.writeFileSync('.gitignore', provinces[x] + '/' + '\n', { flag: 'a' });
 
 
             var tempName = htmlString.substring(htmlString.indexOf('">') + 2, htmlString.indexOf("</a>"));

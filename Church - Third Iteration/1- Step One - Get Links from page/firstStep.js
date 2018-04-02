@@ -1,11 +1,12 @@
 
+//use phantomjs firstSte.js
 var page = require('webpage').create();
 var fs = require('fs');
 var system = require('system')
 
 
 var args = system.args;
-//emulate settings
+//emulate settings for web browser
 page.settings.userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
 //set size of page?
 page.viewportSize = { width: 1280, height: 1024 };
@@ -27,6 +28,7 @@ var provinces = [
     'SK',
     'YT'
 ];
+//list of links to be used for getting the main search result page
 var urls = [
     'http://www.cra-arc.gc.ca/ebci/haip/srch/advancedsearchresult-eng.action?n=church&b=&q=&s=registered&d=&e=+&c=&v=AB&o=&z=&g=+&t=+&y=+&p=1',    
     'http://www.cra-arc.gc.ca/ebci/haip/srch/advancedsearchresult-eng.action?n=church&b=&q=&s=registered&d=&e=+&c=&v=BC&o=&z=&g=+&t=+&y=+&p=1',
@@ -46,7 +48,7 @@ var urls = [
 
 
 var x = 0;
-
+//recursive function that goes into each page and gets the HTML and saves it in htmlPages folder based on province
 var genericCallback = function () {
     return function (status) {
         console.log("URL: " + urls[x]);
@@ -80,12 +82,13 @@ var genericCallback = function () {
 
 
         if (status === "success") {
+            //this means its past all the links and reached the end of the links array
             if (provinces[x] === 'undefined') {
                 console.log('end')
             }
             else {
                 //-- YOUR STUFF HERE ---------------------- 
-                // do your stuff here... I'm taking a picture of the page
+                // putting the html content into the correct folder
                 fs.write('htmlPages/' + provinces[x] + '.txt', page.content, 'w');
 
 
@@ -112,6 +115,7 @@ var genericCallback = function () {
         }
     };
 };
+//calling the recursive function here
 page.open(urls[x], genericCallback());
 
 
